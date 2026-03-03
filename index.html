@@ -125,7 +125,18 @@
     const cursor    = document.getElementById('cursor');
     const spotlight = document.getElementById('spotlight');
     let mx = 0, my = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    let mouseVisible = false;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (!mouseVisible) {
+        mouseVisible = true;
+        cursor.style.opacity    = '1';
+        spotlight.style.opacity = '1';
+      }
+    });
+
     (function loop() {
       cursor.style.left    = mx + 'px';
       cursor.style.top     = my + 'px';
@@ -189,6 +200,8 @@
       }
       requestAnimationFrame(animateGlyphs);
     })();
+
+    
   </script>
 </body>
 </html>
