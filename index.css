@@ -57,6 +57,8 @@
 
     /* ── CURSOR ── */
     #cursor {
+      opacity: 0;
+      transition: opacity 0.3s ease;
       position: fixed;
       width: 10px; height: 10px;
       background: var(--white);
@@ -70,6 +72,8 @@
 
     /* ── SPOTLIGHT —— */
     #spotlight {
+      opacity: 0;
+      transition: opacity 0.3s ease;
       position: fixed;
       width: 200px; height: 200px;
       border-radius: 50%;
