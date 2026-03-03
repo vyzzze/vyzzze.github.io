@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vyze · dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="spotlight"></div>
+  <div id="dot-grid"></div>
+  <div id="glyphs"></div>
+
+  <div class="side-line side-line-left"></div>
+  <div class="side-line side-line-right"></div>
+
+  <div class="container">
+
+    <header>
+      <div class="header-line">
+        <div class="name-block"><h1><em>vyze</em></h1></div>
+        <div class="header-meta">
+          <span class="role">Dev</span>
+          <span class="location">Germany</span>
+        </div>
+      </div>
+      <p class="tagline">Coding random stuff I feel like coding.</p>
+      <nav class="nav-strip">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="https://github.com/vyzzze" target="_blank">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>Germany</span>
+        <span>Random</span>
+        <span>Coding on a whim</span>
+        <span>vyze</span>
+        <span>Dev</span>
+        <span>Germany</span>
+        <span>Random</span>
+        <span>Coding on a whim</span>
+        <span>vyze</span>
+        <span>Dev</span>
+      </div>
+    </div>
+
+    <section id="projects">
+      <div class="deco-rule"><span>✦</span></div>
+      <div class="projects-list">
+
+        <a class="project-row" href="https://vyzzze.github.io/jjs-wiki" target="_blank">
+          <div class="row-body">
+            <span class="row-title">JJS Wiki</span>
+            <span class="row-desc">A community wiki for the Roblox game Jujutsu Shenanigans.</span>
+            <div class="row-tags"><span class="tag">Wiki</span><span class="tag">Roblox</span><span class="tag">Web</span></div>
+          </div>
+          <span class="row-arrow">↗</span>
+        </a>
+
+        <a class="project-row" href="https://github.com/vyzzze" target="_blank">
+          <div class="row-body">
+            <span class="row-title">More on GitHub</span>
+            <span class="row-desc">Other projects, experiments, and things built on a whim.</span>
+            <div class="row-tags"><span class="tag">Various</span></div>
+          </div>
+          <span class="row-arrow">↗</span>
+        </a>
+
+      </div>
+    </section>
+
+    <div class="deco-rule"><span>✦</span></div>
+
+    <section id="about">
+      <div class="about-heading">A<br/>little<br/><em>about.</em></div>
+      <div class="about-text">
+        <p>I just do things I want to do, on a whim. There might not be any connection between my projects — I do what I feel like doing.</p>
+        <p>Based in Germany. You can find me across the internet as vyzzze.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="deco-rule"><span>✦</span></div>
+      <div class="contact-inner">
+        <h2 class="contact-heading">My Socials / Contact</h2>
+        <div class="contact-links">
+          <a href="mailto:vyzzze@gmail.com">
+            <span class="icon">✉</span>Email
+          </a>
+          <a href="https://youtube.com/@vyzzze" target="_blank">
+            <span class="icon">▶</span>YouTube
+          </a>
+          <a href="https://linktr.ee/vyzzze" target="_blank">
+            <span class="icon">◈</span>Linktree
+          </a>
+          <a href="https://x.com/vyzzze_" target="_blank">
+            <span class="icon">✕</span>X
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 vyze</span>
+      <div class="footer-dot"></div>
+      <span>Built by hand</span>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── CURSOR + SPOTLIGHT ──
+    const cursor    = document.getElementById('cursor');
+    const spotlight = document.getElementById('spotlight');
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+      cursor.style.left    = mx + 'px';
+      cursor.style.top     = my + 'px';
+      spotlight.style.left = mx + 'px';
+      spotlight.style.top  = my + 'px';
+      requestAnimationFrame(loop);
+    })();
+
+    // ── GLYPHS — random drift in random directions ──
+    const GLYPHS = ['◈','◆','◉','◈','◉','●','◆','■','◆','○','◉','▢'];
+    const container = document.getElementById('glyphs');
+    const count = 14;
+    const glyphData = [];
+
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'glyph';
+      el.textContent = GLYPHS[i % GLYPHS.length];
+
+      const size = 60 + Math.random() * 160;
+      el.style.fontSize = size + 'px';
+
+      // random start position
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * window.innerHeight;
+
+      // random velocity — any direction
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.12 + Math.random() * 0.22;
+      const vx = Math.cos(angle) * speed;
+      const vy = Math.sin(angle) * speed;
+
+      // random slow rotation
+      const vr = (Math.random() - 0.5) * 0.018;
+      let rot = Math.random() * 360;
+
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+
+      container.appendChild(el);
+      glyphData.push({ el, x, y, vx, vy, vr, rot, size });
+    }
+
+    (function animateGlyphs() {
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+      for (const g of glyphData) {
+        g.x   += g.vx;
+        g.y   += g.vy;
+        g.rot += g.vr;
+
+        // wrap around edges
+        if (g.x > W + g.size)  g.x = -g.size;
+        if (g.x < -g.size)     g.x = W + g.size;
+        if (g.y > H + g.size)  g.y = -g.size;
+        if (g.y < -g.size)     g.y = H + g.size;
+
+        g.el.style.transform = `translate(${g.x}px, ${g.y}px) rotate(${g.rot}deg)`;
+        g.el.style.left = '0';
+        g.el.style.top  = '0';
+      }
+      requestAnimationFrame(animateGlyphs);
+    })();
+  </script>
+</body>
+</html>
