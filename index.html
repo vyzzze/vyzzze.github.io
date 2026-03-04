@@ -130,29 +130,41 @@
   </div>
 
   <script>
-    // ── CURSOR + SPOTLIGHT ──
-    const cursor    = document.getElementById('cursor');
-    const spotlight = document.getElementById('spotlight');
-    let mx = 0, my = 0;
-    let mouseVisible = false;
+// ── CURSOR + SPOTLIGHT ──
+const cursor    = document.getElementById('cursor');
+const spotlight = document.getElementById('spotlight');
+let mx = 0, my = 0;
+let mouseVisible = false;
+let hideTimer;
 
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX;
-      my = e.clientY;
-      if (!mouseVisible) {
-        mouseVisible = true;
-        cursor.style.opacity    = '1';
-        spotlight.style.opacity = '1';
-      }
-    });
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  
+  if (!mouseVisible) {
+    mouseVisible = true;
+    cursor.style.opacity    = '1';
+    spotlight.style.opacity = '1';
+  }
 
-    (function loop() {
-      cursor.style.left    = mx + 'px';
-      cursor.style.top     = my + 'px';
-      spotlight.style.left = mx + 'px';
-      spotlight.style.top  = my + 'px';
-      requestAnimationFrame(loop);
-    })();
+  clearTimeout(hideTimer);
+
+  hideTimer = setTimeout(() => {
+    mouseVisible = false;
+    cursor.style.opacity    = '0';
+    spotlight.style.opacity = '0';
+  }, 10000); // <-- change number to adjust hide timer
+});
+
+(function loop() {
+  if (mouseVisible) {
+    cursor.style.left    = mx + 'px';
+    cursor.style.top     = my + 'px';
+    spotlight.style.left = mx + 'px';
+    spotlight.style.top  = my + 'px';
+  }
+  requestAnimationFrame(loop);
+})();
 
     // ── GLYPHS — random drift in random directions ──
     const GLYPHS = ['◈','◆','◉','◈','◉','●','◆','■','◆','○','◉','▢'];
